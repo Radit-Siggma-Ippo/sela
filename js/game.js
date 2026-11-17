@@ -306,6 +306,13 @@ const Game = (function () {
     else if (w.rooms.every((r) => r.judged)) h = "Semua kelas selesai. Jalan ke pintu keluar.";
     else if (w.px > w.exitX - 300) h = "Selesaikan semua kelas dulu.";
     if (w.ending) h = "";
+    if (TOUCH && actBtn) {
+      const show = !!near && !w.ending && !w.frozen;
+      const label = !near ? "" : near.vera ? (near.open ? "Dekati Vera" : "Buka pintu") : near.open ? "Tutup pintu" : "Buka pintu";
+      if (actBtn.classList.contains("show") !== show) actBtn.classList.toggle("show", show);
+      if (show && actBtn.textContent !== label) actBtn.textContent = label;
+    }
+    if (TOUCH) h = h.replace("A / D atau panah kiri-kanan untuk berjalan", "Tombol \u25C0 \u25B6 untuk berjalan").replace(/E atau klik Vera/, "Tombol di kanan atau ketuk Vera").replace(/(^|\s)E: /, (m, a) => (a ? a + "tombol kanan: " : "Tombol kanan: ")).replace("klik dulu", "ketuk dulu");
     if (h !== hint) { hint = h; promptEl.textContent = h; }
   }
 
@@ -319,6 +326,23 @@ const Game = (function () {
   addEventListener("keyup", (e) => { const k = e.key.toLowerCase(); keys[k] = false; if (k === " " && active()) e.preventDefault(); });
   addEventListener("blur", () => Object.keys(keys).forEach((k) => (keys[k] = false)));
 
+  /* ---- kontrol sentuh: tombol layar meniru tombol keyboard ---- */
+  const TOUCH = document.documentElement.classList.contains("touch-ui"), actBtn = document.getElementById("tb-act");
+  document.querySelectorAll("#touch .tbtn").forEach((b) => {
+    const k = b.dataset.key, press = (type) => dispatchEvent(new KeyboardEvent(type, { key: k, bubbles: true }));
+    let held = false;
+    const down = (e) => { if (e.cancelable) e.preventDefault(); if (held) return; held = true; b.classList.add("down"); press("keydown"); };
+    const up = (e) => { if (e && e.cancelable) e.preventDefault(); if (!held) return; held = false; b.classList.remove("down"); press("keyup"); };
+    if (window.PointerEvent) {
+      b.addEventListener("pointerdown", (e) => { try { b.setPointerCapture(e.pointerId); } catch (_) {} down(e); });
+      ["pointerup", "pointercancel"].forEach((t) => b.addEventListener(t, up));
+    } else {
+      b.addEventListener("touchstart", down, { passive: false });
+      ["touchend", "touchcancel"].forEach((t) => b.addEventListener(t, up, { passive: false }));
+    }
+    b.addEventListener("contextmenu", (e) => e.preventDefault());
+  });
+  addEventListener("blur", () => document.querySelectorAll("#touch .tbtn.down").forEach((b) => b.classList.remove("down")));
   function veraNear() { const w = world; return w && w.rooms.find((r) => r.vera && !r.judged && r.open && r.ang > 0.9 && Math.abs(w.px - r.x) < 60); }
   function toCanvas(e) { const b = cv.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height }; }
   const inVera = (p) => p.x >= VERA_HIT.x && p.x <= VERA_HIT.x + VERA_HIT.w && p.y >= VERA_HIT.y && p.y <= VERA_HIT.y + VERA_HIT.h;

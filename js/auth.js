@@ -68,3 +68,12 @@ document.addEventListener("keydown", (e) => {
   e.preventDefault();
   enterMenu(store.get("sela-session", null) || "Tamu");
 });
+
+// Di HP: ketuk tulisan kecil di layar awal untuk langsung masuk
+(function () {
+  const h = document.getElementById("enter-hint"); if (!h) return;
+  const touch = document.documentElement.classList.contains("touch-ui");
+  if (touch) h.textContent = "Ketuk di sini untuk langsung masuk";
+  h.style.cursor = "pointer";
+  h.addEventListener("click", () => enterMenu(store.get("sela-session", null) || "Tamu"));
+})();

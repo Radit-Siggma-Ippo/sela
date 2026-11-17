@@ -421,14 +421,37 @@ h2{font-size:clamp(1.5rem,4.5vh,2.2rem)}
 
 .enter-hint{color:var(--ash);font-style:italic;font-size:.95rem;animation:flicker 7s infinite}
 
-.death{position:fixed;inset:0;z-index:40;background:#fff;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .8s ease}
+.death{position:fixed;inset:0;z-index:40;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .8s ease}
 .death.show{opacity:1;pointer-events:auto}
 .death-ring{position:relative;width:min(80vh,88vw);aspect-ratio:1}
-.ouro{width:100%;height:100%;display:block;mix-blend-mode:multiply;transform-origin:50% 53.7%;animation:ouroSpin 28s linear infinite}
+.ouro{width:100%;height:100%;display:block;mix-blend-mode:screen;transform-origin:50% 53.7%;animation:ouroSpin 28s linear infinite}
 @keyframes ouroSpin{to{transform:rotate(-360deg)}}
-.death-n{position:absolute;left:50%;top:53.7%;transform:translate(-50%,-50%);font-family:"Creepster","Eater","IM Fell English",Georgia,serif;font-size:min(26vh,26vw);line-height:1;color:#7a0000;
-  text-shadow:0 0 16px rgba(150,0,0,.4),3px 3px 0 rgba(0,0,0,.22);letter-spacing:.04em;opacity:0;transition:opacity 1.6s ease 1s;animation:deathFlick 3.8s steps(1,end) infinite}
+.death-n{position:absolute;left:50%;top:53.7%;transform:translate(-50%,-50%);font-family:"Creepster","Eater","IM Fell English",Georgia,serif;font-size:min(26vh,26vw);line-height:1;color:#fff;
+  text-shadow:0 0 18px rgba(255,255,255,.45),0 0 4px rgba(255,255,255,.6);letter-spacing:.04em;opacity:0;transition:opacity 1.6s ease 1s;animation:deathFlick 3.8s steps(1,end) infinite}
 .death-n.long{font-size:min(19vh,19vw)}
 .death.show .death-n{opacity:1}
 @keyframes deathFlick{0%,100%{transform:translate(-50%,-50%)}9%{transform:translate(-51%,-50%) skewX(-3deg)}11%{transform:translate(-49.5%,-50%)}13%{transform:translate(-50%,-50%)}61%{transform:translate(-50%,-50.8%)}63%{transform:translate(-50%,-50%)}}
 @media (prefers-reduced-motion:reduce){.ouro,.death-n{animation:none}}
+
+/* ===== kontrol sentuh (Android) ===== */
+html,body{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;overscroll-behavior:none}
+.touch,.rotate{display:none}
+.tbtn{touch-action:none;-webkit-user-select:none;user-select:none;font-family:Georgia,serif;color:#ecebe6;background:rgba(18,18,24,.62);
+  border:2px solid rgba(236,235,230,.55);border-radius:50%;width:4.2rem;height:4.2rem;font-size:1.6rem;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px rgba(0,0,0,.6);padding:0}
+.tbtn.down{background:rgba(236,235,230,.35);border-color:#fff}
+.tbtn-act{width:auto;min-width:7rem;height:4.2rem;border-radius:2.1rem;padding:0 1.3rem;font-size:1.15rem;font-style:italic;display:none}
+.tbtn-act.show{display:flex}
+.touch-ui #game.active .touch{display:flex;position:fixed;left:0;right:0;bottom:max(.8rem,env(safe-area-inset-bottom));justify-content:space-between;align-items:flex-end;
+  padding:0 max(1rem,env(safe-area-inset-left));z-index:20;pointer-events:none}
+.touch-ui #game.active .touch .tbtn{pointer-events:auto}
+.touch-move{display:flex;gap:1rem}
+.touch-ui #game{padding:.4rem;gap:.2rem}
+.touch-ui #stage{touch-action:manipulation;width:min(100%,calc((100dvh - 5.4rem) * 1.7778))}
+.touch-ui #game .hud{width:min(100%,calc((100dvh - 5.4rem) * 1.7778))}
+.touch-ui .prompt{font-size:.8rem;min-height:1.1em;text-align:center;max-width:70vw}
+.touch-ui .enter-hint{padding:.7rem 1.2rem;border:1px solid rgba(236,235,230,.35);border-radius:3px}
+@media (orientation:portrait){
+  .touch-ui .rotate{display:flex;position:fixed;inset:0;z-index:100;background:#000;color:#ecebe6;align-items:center;justify-content:center;text-align:center;font-size:4rem;padding:2rem}
+  .touch-ui .rotate p{font-size:1.1rem;margin-top:1rem;font-family:Georgia,serif}
+}
