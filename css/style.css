@@ -455,3 +455,20 @@ html,body{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;ove
   .touch-ui .rotate{display:flex;position:fixed;inset:0;z-index:100;background:#000;color:#ecebe6;align-items:center;justify-content:center;text-align:center;font-size:4rem;padding:2rem}
   .touch-ui .rotate p{font-size:1.1rem;margin-top:1rem;font-family:Georgia,serif}
 }
+
+/* ===== layar pendek (HP landscape): rapatkan + boleh di-scroll ===== */
+@media (max-height:560px){
+  .screen{overflow-y:auto;overflow-x:hidden;justify-content:safe center;gap:.4rem;padding:.5rem 1rem}
+  .screen.scroll{justify-content:flex-start}
+  h2{font-size:1.5rem}
+  .title{font-size:clamp(2.2rem,9vh,3.4rem)}
+  .tagline,.who{font-size:.8rem;margin:0}
+  .btn{padding:.35rem 1.2rem;font-size:.95rem;min-height:0}
+  .stack{gap:.4rem;width:min(18rem,100%)}
+  #menu .stack{margin-top:.4rem;display:grid;grid-template-columns:1fr 1fr;width:min(26rem,100%);gap:.4rem}
+  #menu .stack .btn.primary{grid-column:1 / -1}
+  .menu-ui{padding:.4rem 1rem}
+  .mode{padding:.6rem 1rem}
+  #howto .rules,.rules{gap:.25rem;font-size:.9rem}
+  .keys{font-size:.8rem}
+}

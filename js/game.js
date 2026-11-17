@@ -12,13 +12,13 @@ const Game = (function () {
   const SP = { cw: 178, ch: 314, ax: 90 };
   const PS = 0.95;
   const REACH_T = 0.45;
-  const IMG = {}; const RING = new Image(); RING.src = ASSET + "lingkaran.png"; let tinted = null, ready = false;
+  const IMG = {}; const RING = new Image(); RING.src = ASSET + "lingkaran.png"; let tinted = null, ready = false; const loadFail = [];
   (function load() {
     const list = { corridor: "corridor.jpg", foreground: "foreground.png", player: "player.png" }; let n = 0;
     Object.keys(list).forEach((k) => {
       const im = new Image(); IMG[k] = im;
       im.onload = () => { if (++n === 3) { buildTint(); ready = true; } };
-      im.onerror = () => console.error("Gagal memuat aset: " + ASSET + list[k]);
+      im.onerror = () => { console.error("Gagal memuat aset: " + ASSET + list[k]); loadFail.push(ASSET + list[k]); };
       im.src = ASSET + list[k];
     });
   })();
@@ -289,7 +289,11 @@ const Game = (function () {
 
   function render() {
     const w = world, cam = w.cam; g.textAlign = "left";
-    if (!ready) { g.fillStyle = "#000"; g.fillRect(0, 0, W, H); return; }
+    if (!ready) {
+      g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
+      if (loadFail.length) { g.fillStyle = "#e8e8e4"; g.font = "18px Georgia, serif"; g.textAlign = "center"; g.fillText("Gambar tidak ketemu di server:", W / 2, H / 2 - 24); loadFail.forEach((f, i) => g.fillText(f, W / 2, H / 2 + 8 + i * 24)); g.font = "14px Georgia, serif"; g.fillText("Folder assets belum ke-upload lengkap.", W / 2, H / 2 + 60 + loadFail.length * 24); }
+      return;
+    }
     drawCorridor(cam);
     w.rooms.forEach((r) => drawDoor(r, cam)); drawExit(cam);
     if (w.ending) g.globalAlpha = 1 - ease01(w.ending.t, END_FADE_PLAYER[0], END_FADE_PLAYER[1]);
