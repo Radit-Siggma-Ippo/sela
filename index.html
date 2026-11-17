@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Sela</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +36,7 @@
       <span class="door-sign">Register</span>
     </button>
   </div>
-  <p class="enter-hint">Tekan Enter untuk langsung masuk</p>
+  <p class="enter-hint" id="enter-hint">Tekan Enter untuk langsung masuk</p>
 </section>
 
 <section id="login" class="screen">
@@ -163,6 +163,15 @@
 
   <p class="prompt" id="prompt">A / D atau panah kiri-kanan untuk berjalan</p>
 
+  <!-- kontrol sentuh (Android / HP). Muncul otomatis di layar sentuh -->
+  <div class="touch" id="touch" aria-label="Kontrol sentuh">
+    <div class="touch-move">
+      <button class="tbtn" id="tb-left" data-key="a" aria-label="Jalan ke kiri">&#9664;</button>
+      <button class="tbtn" id="tb-right" data-key="d" aria-label="Jalan ke kanan">&#9654;</button>
+    </div>
+    <button class="tbtn tbtn-act" id="tb-act" data-key="e" aria-label="Buka atau tutup pintu">E</button>
+  </div>
+
 </section>
 
 <div id="vn" class="vn" aria-live="polite">
@@ -232,5 +241,6 @@
 <script src="js/vera_script.js"></script>
 <script src="js/vera.js"></script>
 <script src="js/game.js"></script>
+<div id="rotate" class="rotate"><div>&#8635;<p>Putar HP kamu ke mode <b>landscape</b> (menyamping) untuk bermain.</p></div></div>
 </body>
 </html>
