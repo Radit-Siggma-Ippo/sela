@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/vn.css">
+</head>
+<body>
+
+<button id="btn-fs" class="fs-btn" type="button" aria-label="Layar penuh" title="Layar penuh (F)">&#9974;</button>
+
+<div class="bg"></div>
+<div class="fog fog-a"></div>
+<div class="fog fog-b"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div class="dim" id="dim"></div>
+<div class="glitch-fx"></div>
+
+<section id="welcome" class="screen active">
+  <h1 class="title">Sela</h1>
+  <div class="doors">
+    <button class="door" data-go="login" aria-label="Login">
+      <span class="door-frame"><span class="door-light"></span><span class="door-leaf"><span class="knob"></span></span></span>
+      <span class="door-sign">Login</span>
+    </button>
+    <button class="door" data-go="register" aria-label="Register">
+      <span class="door-frame"><span class="door-light"></span><span class="door-leaf"><span class="knob"></span></span></span>
+      <span class="door-sign">Register</span>
+    </button>
+  </div>
+  <p class="enter-hint">Tekan Enter untuk langsung masuk</p>
+</section>
+
+<section id="login" class="screen">
+  <h2>Masuk</h2>
+  <form class="auth-form" id="form-login" autocomplete="on">
+    <label>Nama pengguna
+      <input type="text" id="login-user" autocomplete="username" required>
+    </label>
+    <label>Kata sandi
+      <input type="password" id="login-pass" autocomplete="current-password" required>
+    </label>
+    <p class="form-msg" id="login-msg" role="alert"></p>
+    <button class="btn primary" type="submit">Login</button>
+  </form>
+  <button class="btn ghost" data-go="register">No account? Register</button>
+  <button class="btn ghost" data-go="welcome">Back</button>
+</section>
+
+<section id="register" class="screen">
+  <h2>Daftar</h2>
+  <form class="auth-form" id="form-register" autocomplete="on">
+    <label>Nama pengguna
+      <input type="text" id="reg-user" autocomplete="username" minlength="3" maxlength="16" required>
+    </label>
+    <label>Kata sandi
+      <input type="password" id="reg-pass" autocomplete="new-password" minlength="6" required>
+    </label>
+    <label>Ulangi kata sandi
+      <input type="password" id="reg-pass2" autocomplete="new-password" required>
+    </label>
+    <p class="form-msg" id="reg-msg" role="alert"></p>
+    <button class="btn primary" type="submit">Create account</button>
+  </form>
+  <button class="btn ghost" data-go="login">Have an account? Login</button>
+  <button class="btn ghost" data-go="welcome">Back</button>
+</section>
+
+<section id="menu" class="screen">
+  <div class="scene">
+    <div class="art" id="art"></div>
+    <div class="dim"></div>
+    <div class="menu-ui" id="menu-ui">
+      <h1 class="title">Sela</h1>
+      <p class="tagline">Tempat pintu-pintu menunggu.</p>
+      <p class="who" id="who"></p>
+      <nav class="stack">
+        <button class="btn primary" data-go="modes">Play</button>
+        <button class="btn" data-go="gallery">Anomaly Log</button>
+        <button class="btn" data-go="howto">How to Play</button>
+        <button class="btn" data-go="settings">Settings</button>
+        <button class="btn ghost" data-go="credits">Credits</button>
+        <button class="btn ghost" id="btn-logout">Log Out</button>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<section id="modes" class="screen">
+  <h2>Pilih tingkat kesulitan</h2>
+  <div class="mode-list">
+    <button class="mode" data-mode="easy" data-total="5">
+      <span class="mode-name">Easy</span>
+      <span class="mode-desc">5 classrooms</span>
+    </button>
+    <button class="mode" data-mode="hard" data-total="7">
+      <span class="mode-name">Hard</span>
+      <span class="mode-desc">7 classrooms</span>
+    </button>
+    <button class="mode" data-mode="extreme" data-total="13">
+      <span class="mode-name">Extreme</span>
+      <span class="mode-desc">13 classrooms</span>
+    </button>
+  </div>
+  <button class="btn ghost" data-go="menu">Back</button>
+</section>
+
+<section id="gallery" class="screen scroll">
+  <h2>Galeri anomali</h2>
+  <p class="tagline" id="gal-count">Ditemukan 0 dari 12</p>
+  <div id="gal-grid" class="gal-grid"></div>
+  <button class="btn ghost" data-go="menu">Back</button>
+</section>
+
+<section id="settings" class="screen">
+  <h2>Pengaturan</h2>
+  <div class="stack wide">
+    <button class="btn" id="btn-sound">Sound: on</button>
+    <label class="slider">Kecerahan
+      <input type="range" id="bright" min="40" max="100" value="100">
+    </label>
+    <button class="btn ghost" id="btn-reset">Reset gallery</button>
+  </div>
+  <button class="btn ghost" data-go="menu">Back</button>
+</section>
+
+<section id="credits" class="screen">
+  <h2>Kredit</h2>
+  <p class="tagline">Dibuat oleh Radit Siggma Ipo<br>Proyek 4, HTML, CSS, dan JavaScript</p>
+  <button class="btn ghost" data-go="menu">Back</button>
+</section>
+
+<section id="howto" class="screen">
+  <h2>Cara main</h2>
+  <ol class="rules">
+    <li>Jalan menyusuri lorong dan buka pintu kelas.</li>
+    <li>Kalau kelasnya normal, biarkan pintu tetap terbuka.</li>
+    <li>Kalau ada yang janggal, klik bagian yang janggal sampai muncul lingkaran merah, lalu tutup pintunya.</li>
+    <li>Salah memutuskan, dan kamu kembali ke awal lorong.</li>
+  </ol>
+  <p class="keys">Gerak: A / D atau panah kiri-kanan. Pintu: E atau Spasi. Jeda: Esc.</p>
+  <button class="btn ghost" data-go="menu">Back</button>
+</section>
+
+<section id="game" class="screen">
+  <header class="hud">
+    <div class="progress">
+      <span id="hud-label">Kelas 0 dari 5</span>
+      <div id="pips" class="pips" aria-hidden="true"></div>
+    </div>
+    <button class="btn small ghost" id="btn-pause">Pause</button>
+  </header>
+
+  <canvas id="stage" width="960" height="540"></canvas>
+
+  <p class="prompt" id="prompt">A / D atau panah kiri-kanan untuk berjalan</p>
+
+</section>
+
+<div id="vn" class="vn" aria-live="polite">
+  <div class="vn-bg" id="vn-bg"></div>
+  <img class="vn-sprite" id="vn-sprite" alt="">
+  <div class="vn-fx" id="vn-fx"></div>
+  <canvas class="vn-parts" id="vn-parts"></canvas>
+  <div class="vn-shade"></div>
+  <div class="vn-poem" id="vn-poem"></div>
+  <div class="vn-coming" id="vn-coming"><p><span class="vn-vera">vera</span> is coming</p></div>
+  <div class="vn-tag" id="vn-tag"></div>
+  <div class="vn-box" id="vn-box">
+    <div class="vn-name" id="vn-name"></div>
+    <p class="vn-text" id="vn-text"></p>
+    <div class="vn-choices" id="vn-choices"></div>
+    <span class="vn-next" id="vn-next">&#9660;</span>
+  </div>
+</div>
+
+<div id="detail" class="overlay">
+  <div class="panel">
+    <div class="shot" id="detail-shot"></div>
+    <h2 id="detail-name"></h2>
+    <p id="detail-desc"></p>
+    <button class="btn" id="btn-detail-close">Close</button>
+  </div>
+</div>
+
+<div id="pause" class="overlay">
+  <div class="panel">
+    <h2>Dijeda</h2>
+    <div class="stack">
+      <button class="btn" id="btn-resume">Resume</button>
+      <button class="btn ghost" id="btn-restart">Restart</button>
+      <button class="btn ghost" id="btn-quit">Quit to menu</button>
+    </div>
+  </div>
+</div>
+
+<div id="fail" class="overlay blackout">
+  <div class="panel">
+    <h2>Lampu padam</h2>
+    <p>Keputusanmu keliru. Lorong menarikmu kembali ke awal.</p>
+    <button class="btn" id="btn-retry">Try again</button>
+  </div>
+</div>
+
+<div id="win" class="overlay ending">
+  <div class="poem">
+    <h2 class="poem-title" data-f style="--d:.5s">Sela</h2>
+    <p class="poem-body">
+      <span data-f style="--d:1.6s">「Di antara pintu yang kau buka dan pintu yang kau tutup, ada sela tempat jiwa belajar membedakan mimpi dari rumah.</span>
+      <span data-f style="--d:4.6s">Lorong itu bukan jalan, melainkan napas panjang yang ditahan semalam penuh; pintu demi pintu kau menimbang gelap, dan pintu demi pintu gelap menunduk menyerahkan wajahnya.</span>
+      <span data-f style="--d:8.8s">Kini fajar menjahit celah itu dengan benang paling pucat, dan setiap ketakutan yang kau tinggalkan tumbuh menjadi cahaya pertama yang menyambutmu pulang.」</span>
+    </p>
+    <p class="poem-by" data-f style="--d:12s">—— Vera</p>
+    <p class="poem-hint" data-f style="--d:14s">klik di mana saja untuk kembali</p>
+  </div>
+</div>
+
+<div id="death" class="death" aria-hidden="true"><div class="death-ring"><img class="ouro" src="assets/game/ouroboros.png" alt=""><div class="death-n" id="death-n">0</div></div></div>
+
+<script src="js/script.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/vera_script.js"></script>
+<script src="js/vera.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
